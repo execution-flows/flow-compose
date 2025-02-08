@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v5.0.0"
+
+    hooks:
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: mixed-line-ending
+      - id: no-commit-to-branch
+      - id: forbid-new-submodules
+      - id: check-shebang-scripts-are-executable
+      - id: check-executables-have-shebangs
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff  # linter.
+        args: [ --fix ]
+      - id: ruff-format  # formatter.
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        files: ^/
+        entry: poetry run mypy
+        require_serial: true
+        language: system
+        types: [python]
