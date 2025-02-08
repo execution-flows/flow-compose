@@ -4,12 +4,12 @@
 import unittest
 from unittest.mock import Mock
 
-from fyco import flow, flow_method
+from fyco import flow, flow_function
 
 greet_hello_world_mock = Mock()
 
 
-@flow_method
+@flow_function
 def greet_hello_world() -> None:
     greet_hello_world_mock()
 
@@ -19,7 +19,7 @@ def hello_world(greet=greet_hello_world) -> None:
     greet()
 
 
-class TestFlowWithNullaryMethod(unittest.TestCase):
-    def test_flow_with_nullary_method(self):
+class TestFlowWithNullaryFunction(unittest.TestCase):
+    def test_flow_with_nullary_function(self):
         hello_world()
         greet_hello_world_mock.assert_called_once()

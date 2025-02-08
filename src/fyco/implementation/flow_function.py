@@ -7,7 +7,7 @@ from fyco.types import ReturnType
 
 
 def annotation(wrapped: Callable[..., ReturnType]) -> ReturnType:
-    def flow_method(**kwargs: Any) -> ReturnType:
+    def flow_function(**kwargs: Any) -> ReturnType:
         return wrapped(**kwargs)
 
-    return flow_method
+    return flow_function
