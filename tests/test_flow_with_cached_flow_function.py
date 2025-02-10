@@ -38,7 +38,7 @@ class TestFlowWithFunctionComposingCachedFunction(unittest.TestCase):
         greet_using_greeting_mock.assert_called_once_with("Hello World!")
         greet_hello_world_mock.assert_called_once_with()
 
-        self.assertEquals(len(greeting_hello_world._flow_function_cache), 0)
+        self.assertEqual(len(greeting_hello_world._flow_function_cache), 0)
 
         greet_using_greeting_mock.reset_mock()
         greet_hello_world_mock.reset_mock()
