@@ -20,9 +20,17 @@ repos:
 
   - repo: local
     hooks:
-      - id: mypy
-        name: mypy
-        files: ^/
+      - id: mypy-src
+        name: mypy src
+        files: ^src/
+        entry: poetry run mypy
+        require_serial: true
+        language: system
+        types: [python]
+
+      - id: mypy-tests
+        name: mypy tests
+        files: ^tests/
         entry: poetry run mypy
         require_serial: true
         language: system
