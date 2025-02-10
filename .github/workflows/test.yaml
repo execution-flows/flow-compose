@@ -1,0 +1,28 @@
+name: _Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-3_10:
+    uses: ./.github/workflows/python_version_tests.yaml
+    with:
+      PYTHON_VERSION: "3.10"
+
+  test-3_11:
+    uses: ./.github/workflows/python_version_tests.yaml
+    with:
+      PYTHON_VERSION: "3.11"
+
+  test-3_12:
+    uses: ./.github/workflows/python_version_tests.yaml
+    with:
+      PYTHON_VERSION: "3.12"
+
+  test-3_13:
+    uses: ./.github/workflows/python_version_tests.yaml
+    with:
+      PYTHON_VERSION: "3.13"
