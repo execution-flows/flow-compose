@@ -55,8 +55,6 @@ class TestFlowWithFunctionComposingCachedFunctionWithArgument(unittest.TestCase)
         greet_using_greeting_mock.assert_called_once_with("Hello World! - 11")
         greet_hello_world_mock.assert_called_once_with(11)
 
-        self.assertEqual(len(greeting_hello_world._flow_function_cache), 0)
-
         greet_using_greeting_mock.reset_mock()
         greet_hello_world_mock.reset_mock()
 
@@ -65,5 +63,3 @@ class TestFlowWithFunctionComposingCachedFunctionWithArgument(unittest.TestCase)
             [mock.call("Hello World! - 11"), mock.call("Hello World! - 13")]
         )
         greet_hello_world_mock.assert_has_calls([mock.call(11), mock.call(13)])
-
-        self.assertEqual(len(greeting_hello_world._flow_function_cache), 0)

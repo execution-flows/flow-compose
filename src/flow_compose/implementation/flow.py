@@ -5,8 +5,12 @@ import inspect
 from typing import Callable, Any
 
 from extensions.makefun_extension import with_signature
-from flow_compose.types import ReturnType, FlowContext, FlowFunction
-
+from flow_compose.types import (
+    ReturnType,
+    FlowContext,
+    FlowFunction,
+    FlowFunctionInvoker,
+)
 
 _FLOW_RUN_ID: int = 0
 
@@ -42,18 +46,16 @@ def annotation(
             global _FLOW_RUN_ID
             _FLOW_RUN_ID += 1
 
-            flow_context = FlowContext(flow_run_id=_FLOW_RUN_ID)
+            flow_context = FlowContext()
 
             cached_flow_functions: list[FlowFunction[Any]] = []
 
             for configured_flow_function in flow_functions_configuration:
-                flow_context[configured_flow_function] = (
-                    _get_flow_function_with_default_flow_context(
-                        flow_function=flow_functions_configuration[
-                            configured_flow_function
-                        ],
-                        flow_context=flow_context,
-                    )
+                flow_context[configured_flow_function] = FlowFunctionInvoker(
+                    flow_function=flow_functions_configuration[
+                        configured_flow_function
+                    ],
+                    flow_context=flow_context,
                 )
                 if flow_functions_configuration[configured_flow_function].cached:
                     cached_flow_functions.append(
@@ -65,11 +67,9 @@ def annotation(
                     raise AssertionError(
                         f"{flow_function_parameter.name}: FlowFunction is already defined in flow context."
                     )
-                flow_context[flow_function_parameter.name] = (
-                    _get_flow_function_with_default_flow_context(
-                        flow_function=flow_function_parameter.default,
-                        flow_context=flow_context,
-                    )
+                flow_context[flow_function_parameter.name] = FlowFunctionInvoker(
+                    flow_function=flow_function_parameter.default,
+                    flow_context=flow_context,
                 )
                 if flow_function_parameter.default.cached:
                     cached_flow_functions.append(flow_function_parameter.default)
@@ -77,37 +77,8 @@ def annotation(
                     flow_function_parameter.name
                 ]
 
-            result = wrapped_flow(**kwargs)
-
-            for cached_flow_function in cached_flow_functions:
-                cached_flow_function.reset_cache(flow_context.flow_run_id)
-
-            return result
+            return wrapped_flow(**kwargs)
 
         return flow_invoker
 
     return wrapper
-
-
-def _get_flow_function_with_default_flow_context(
-    flow_function: FlowFunction[Any], flow_context: FlowContext
-) -> FlowFunction[Any]:
-    @with_signature(
-        func_name=flow_function.name,
-        func_signature=inspect.Signature(
-            [parameter for parameter in flow_function.parameters[:-1]]
-            + [
-                # flow_context param is now the last param since it has default value.
-                inspect.Parameter(
-                    name=flow_function.parameters[-1].name,
-                    kind=flow_function.parameters[-1].kind,
-                    annotation=flow_function.parameters[-1].annotation,
-                    default=flow_context,
-                )
-            ]
-        ),
-    )
-    def flow_function_with_default_flow_context(**kwargs: Any) -> Any:
-        return flow_function(**kwargs)
-
-    return FlowFunction(flow_function_with_default_flow_context, cached=False)

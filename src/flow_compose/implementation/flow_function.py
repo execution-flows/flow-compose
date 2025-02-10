@@ -2,11 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
-from typing import get_origin
 from typing import Callable, Any
+from typing import get_origin
 
 from extensions.makefun_extension import with_signature
 from flow_compose.types import ReturnType, FlowContext, FlowFunction
+
+
+_EMPTY_FLOW_CONTEXT = FlowContext()
 
 
 def annotation(cached: bool = False) -> Callable[..., FlowFunction[ReturnType]]:
@@ -53,7 +56,7 @@ def annotation(cached: bool = False) -> Callable[..., FlowFunction[ReturnType]]:
                         name="flow_context",
                         kind=inspect.Parameter.POSITIONAL_OR_KEYWORD,
                         annotation=FlowContext,
-                        default=FlowContext(-1),
+                        default=_EMPTY_FLOW_CONTEXT,
                     )
                 ]
             ),
