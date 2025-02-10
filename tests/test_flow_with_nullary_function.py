@@ -4,18 +4,19 @@
 import unittest
 from unittest.mock import Mock
 
-from fyco import flow, flow_function
+from flow_compose import flow, flow_function
+from flow_compose.types import FlowFunction
 
 greet_hello_world_mock = Mock()
 
 
-@flow_function
+@flow_function()
 def greet_hello_world() -> None:
     greet_hello_world_mock()
 
 
 @flow()
-def hello_world(greet=greet_hello_world) -> None:
+def hello_world(greet: FlowFunction[None] = greet_hello_world) -> None:
     greet()
 
 
