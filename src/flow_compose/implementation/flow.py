@@ -62,20 +62,36 @@ def annotation(
                         flow_functions_configuration[configured_flow_function]
                     )
 
+            missing_flow_arguments: list[str] = []
             for flow_function_parameter in flow_functions_parameters:
-                if flow_function_parameter.name in flow_context:
-                    raise AssertionError(
-                        f"{flow_function_parameter.name}: FlowFunction is already defined in flow context."
+                if (
+                    flow_function_parameter.name not in flow_context
+                    and flow_function_parameter.default is inspect.Parameter.empty
+                ):
+                    missing_flow_arguments.append(flow_function_parameter.name)
+                    continue
+
+                if flow_function_parameter.default is not inspect.Parameter.empty:
+                    flow_context[flow_function_parameter.name] = FlowFunctionInvoker(
+                        flow_function=flow_function_parameter.default,
+                        flow_context=flow_context,
                     )
-                flow_context[flow_function_parameter.name] = FlowFunctionInvoker(
-                    flow_function=flow_function_parameter.default,
-                    flow_context=flow_context,
-                )
-                if flow_function_parameter.default.cached:
-                    cached_flow_functions.append(flow_function_parameter.default)
+
+                    if flow_function_parameter.default.cached:
+                        cached_flow_functions.append(flow_function_parameter.default)
+
                 kwargs[flow_function_parameter.name] = flow_context[
                     flow_function_parameter.name
                 ]
+
+            if len(missing_flow_arguments) > 0:
+                raise AssertionError(
+                    f"`{'`, `'.join(missing_flow_arguments)}`"
+                    f" {'FlowFunction is' if len(missing_flow_arguments) == 1 else 'FlowFunctions are'}"
+                    f" required by the flow `{wrapped_flow.__name__}`"
+                    f" but {'is' if len(missing_flow_arguments) == 1 else 'are'}"
+                    f" missing in the flow context."
+                )
 
             return wrapped_flow(**kwargs)
 

@@ -37,7 +37,7 @@ def greet_using_greeting(
     greeting=greeting_hello_world_1,
 )
 def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
-    greet(index=11)
+    greet(11)
 
 
 @flow()

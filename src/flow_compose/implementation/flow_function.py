@@ -62,22 +62,31 @@ def annotation(cached: bool = False) -> Callable[..., FlowFunction[ReturnType]]:
             ),
         )
         def flow_function_with_flow_context(
-            flow_context: FlowContext, **kwargs: Any
+            flow_context: FlowContext, *args: Any, **kwargs: Any
         ) -> ReturnType:
+            missing_flow_function_configurations: list[str] = []
             for parameter in flow_functions_parameters:
                 if (
                     not isinstance(parameter.default, FlowFunction)
                     and parameter.name not in flow_context
                 ):
-                    raise AssertionError(
-                        f"{parameter.name}: FlowFunction is missing in flow context."
-                    )
+                    missing_flow_function_configurations.append(parameter.name)
+                    continue
+
                 kwargs[parameter.name] = (
                     parameter.default
                     if isinstance(parameter.default, FlowFunction)
                     else flow_context[parameter.name]
                 )
-            return wrapped_flow_function(**kwargs)
+            if len(missing_flow_function_configurations) > 0:
+                raise AssertionError(
+                    f"`{'`, `'.join(missing_flow_function_configurations)}`"
+                    f" {'FlowFunction is' if len(missing_flow_function_configurations) == 1 else 'FlowFunctions are'}"
+                    f" required by `{wrapped_flow_function.__name__}` FlowFunction"
+                    f" but {'is' if len(missing_flow_function_configurations) == 1 else 'are'}"
+                    f" missing in the flow context."
+                )
+            return wrapped_flow_function(*args, **kwargs)
 
         return FlowFunction(flow_function_with_flow_context, cached=cached)
 
