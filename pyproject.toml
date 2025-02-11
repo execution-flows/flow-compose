@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flow-compose"
-version = "0.2.3"
+version = "0.2.4"
 description = "Execution Flows - Function Composition Framework"
 authors = ["Vinko Buble <vinkobuble@gmail.com>"]
 readme = "README.md"
