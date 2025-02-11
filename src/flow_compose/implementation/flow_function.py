@@ -6,7 +6,7 @@ from functools import cached_property
 from typing import Callable, Any, Generic, Type
 from typing import get_origin
 
-from extensions.makefun_extension import with_signature
+from flow_compose.extensions.makefun_extension import with_signature
 from flow_compose.types import ReturnType
 
 
