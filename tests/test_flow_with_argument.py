@@ -5,16 +5,9 @@ import unittest
 from unittest.mock import Mock
 
 from flow_compose import flow, flow_function
-from flow_compose.implementation.flow_function import FlowFunction
+from flow_compose.implementation.flow_function import FlowFunction, Argument
 
-greet_hello_world_mock = Mock()
 greet_using_greeting_mock = Mock()
-
-
-@flow_function()
-def greeting_hello_world() -> str:
-    greet_hello_world_mock()
-    return "Hello World!"
 
 
 @flow_function()
@@ -23,14 +16,15 @@ def greet_using_greeting(greeting: FlowFunction[str]) -> None:
 
 
 @flow(
-    greeting=greeting_hello_world,
+    greeting=Argument(str),
 )
 def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
     greet()
 
 
-class TestFlowWithFunctionComposingAnotherFunction(unittest.TestCase):
-    def test_flow_with_function_using_another_function(self):
-        hello_world()
-        greet_using_greeting_mock.assert_called_once()
-        greet_hello_world_mock.assert_called_once()
+class TestFlowWithArgument(unittest.TestCase):
+    def test_flow_with_argument(self):
+        hello_world(
+            greeting="Hello World!",
+        )
+        greet_using_greeting_mock.assert_called_once_with("Hello World!")

@@ -8,19 +8,30 @@ from flow_compose import flow, flow_function
 from flow_compose.implementation.flow_function import FlowFunction
 
 greet_hello_world_mock = Mock()
+greet_using_greeting_mock = Mock()
 
 
 @flow_function()
-def greet_hello_world() -> None:
+def greeting_hello_world() -> str:
     greet_hello_world_mock()
+    return "Hello World!"
 
 
-@flow()
-def hello_world(greet: FlowFunction[None] = greet_hello_world) -> None:
+@flow_function()
+def greet_using_greeting(greeting: FlowFunction[str]) -> None:
+    greet_using_greeting_mock(greeting())
+
+
+@flow(
+    greeting=greeting_hello_world,
+    greet=greet_using_greeting,
+)
+def hello_world(greet: FlowFunction[None]) -> None:
     greet()
 
 
-class TestFlowWithNullaryFunction(unittest.TestCase):
-    def test_flow_with_nullary_function(self):
+class TestFlowWithAllFunctionsInConfiguration(unittest.TestCase):
+    def test_flow_with_all_functions_in_configuration(self):
         hello_world()
+        greet_using_greeting_mock.assert_called_once()
         greet_hello_world_mock.assert_called_once()

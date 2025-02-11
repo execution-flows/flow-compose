@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flow-compose"
-version = "0.1.0"
+version = "0.2.0"
 description = "Execution Flows - Function Composition Framework"
 authors = ["Vinko Buble <vinkobuble@gmail.com>"]
 readme = "README.md"
@@ -9,7 +9,7 @@ license = "MPL2"
 [tool.poetry.dependencies]
 python = ">3.10"
 
-makefun = "1.15.6"
+makefun = "^1.15.6"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.11.1"
