@@ -4,7 +4,7 @@
 import unittest
 from unittest.mock import Mock
 
-from flow_compose import flow, flow_function, FlowFunction, Argument
+from flow_compose import flow, flow_function, FlowFunction, FlowArgument
 
 greet_using_greeting_mock = Mock()
 
@@ -15,7 +15,7 @@ def greet_using_greeting(greeting: FlowFunction[str]) -> None:
 
 
 @flow(
-    greeting=Argument(str, "Hello World!"),
+    greeting=FlowArgument(str, "Hello World!"),
 )
 def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
     greet()

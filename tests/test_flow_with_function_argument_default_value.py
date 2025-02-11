@@ -3,7 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import unittest
 
-from flow_compose import flow, Argument
+from flow_compose import flow, FlowArgument
 
 
 class TestFlowWithFunctionArgumentDefaultValue(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestFlowWithFunctionArgumentDefaultValue(unittest.TestCase):
         ):
 
             @flow(
-                greeting=Argument(str),
+                greeting=FlowArgument(str),
             )
             def hello_world(greeting="Hello World!") -> None:
                 pass
