@@ -134,8 +134,12 @@ class Argument(FlowFunction[ReturnType], Generic[ReturnType]):
         return self.value
 
     @property
+    def value_or_empty(self) -> ReturnType | Any:
+        return self.__value
+
+    @property
     def value(self) -> ReturnType:
-        assert self.value is not inspect.Parameter.empty
+        assert self.__value is not inspect.Parameter.empty
         assert isinstance(self.__value, self.argument_type)
         return self.__value
 

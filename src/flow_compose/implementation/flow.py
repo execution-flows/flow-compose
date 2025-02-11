@@ -76,10 +76,10 @@ def annotation(
             new_parameter = inspect.Parameter(
                 name=flow_function_name,
                 kind=inspect.Parameter.POSITIONAL_OR_KEYWORD,
-                default=flow_function_configuration.value,
+                default=flow_function_configuration.value_or_empty,
                 annotation=flow_function_configuration.argument_type,
             )
-            if flow_function_configuration.value is inspect.Parameter.empty:
+            if flow_function_configuration.value_or_empty is inspect.Parameter.empty:
                 flow_functions_argument_parameters_without_default.append(new_parameter)
             else:
                 flow_functions_argument_parameters_with_default.append(new_parameter)
