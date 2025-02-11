@@ -2,7 +2,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
-from typing import Callable, Any, get_origin, Type
+from typing import Any, get_origin, Type
+
+from collections.abc import Callable
 
 from flow_compose.extensions.makefun_extension import with_signature
 from flow_compose.types import (
