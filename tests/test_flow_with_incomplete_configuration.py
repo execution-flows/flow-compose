@@ -18,7 +18,7 @@ def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
 
 
 class TestFlowWithIncompleteConfiguration(unittest.TestCase):
-    def test_flow_with_incomplete_configuration(self):
+    def test_flow_with_incomplete_configuration(self) -> None:
         with self.assertRaisesRegex(
             AssertionError,
             "`greeting` FlowFunction is required by `greet_using_greeting` FlowFunction"

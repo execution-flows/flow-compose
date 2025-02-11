@@ -2,27 +2,22 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import unittest
-from unittest.mock import Mock
 
-from flow_compose import flow, flow_function
-from flow_compose.implementation.flow_function import FlowFunction, Argument
-
-greet_using_greeting_mock = Mock()
+from flow_compose import flow
+from flow_compose.implementation.flow_function import Argument
 
 
-@flow_function()
-def greet_using_greeting(greeting: FlowFunction[str]) -> None:
-    greet_using_greeting_mock(greeting())
+class TestFlowWithFunctionArgumentDefaultValue(unittest.TestCase):
+    def test_flow_with_function_argument_default_value(self) -> None:
+        with self.assertRaisesRegex(
+            AssertionError,
+            "Argument `greeting` in flow `hello_world` is not FlowFunction"
+            " and is also present in the flow configuration."
+            " Arguments that are not FlowFunction cannot be present in the flow configuration.",
+        ):
 
-
-@flow(
-    greeting=Argument(str, "Hello World!"),
-)
-def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
-    greet()
-
-
-class TestFlowWithArgumentDefaultValue(unittest.TestCase):
-    def test_flow_with_argument_default_value(self):
-        hello_world()
-        greet_using_greeting_mock.assert_called_once_with("Hello World!")
+            @flow(
+                greeting=Argument(str),
+            )
+            def hello_world(greeting="Hello World!") -> None:
+                pass

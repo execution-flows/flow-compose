@@ -42,6 +42,13 @@ def annotation(
                     raise AssertionError(
                         "flow has to have all non-flow-function arguments before flow function arguments."
                     )
+                if parameter.name in flow_functions_configuration:
+                    raise AssertionError(
+                        f"Argument `{parameter.name}` in flow `{wrapped_flow.__name__}`"
+                        f" is not FlowFunction and"
+                        f" is also present in the flow configuration."
+                        f" Arguments that are not FlowFunction cannot be present in the flow configuration."
+                    )
                 non_flow_functions_parameters.append(parameter)
                 continue
 
