@@ -4,7 +4,8 @@
 
 
 from inspect import Signature
-from typing import cast, Callable, Any, Union, Dict
+from typing import cast, Any, Union, Dict
+from collections.abc import Callable
 
 import makefun
 

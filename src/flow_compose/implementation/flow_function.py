@@ -3,8 +3,9 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
 from functools import cached_property
-from typing import Callable, Any, Generic, Type
+from typing import Any, Generic, Type
 from typing import get_origin
+from collections.abc import Callable
 
 from flow_compose.extensions.makefun_extension import with_signature
 from flow_compose.types import ReturnType, FlowFunctionType
