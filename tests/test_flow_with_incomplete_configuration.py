@@ -3,8 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import unittest
 
-from flow_compose import flow, flow_function
-from flow_compose.implementation.flow_function import FlowFunction
+from flow_compose import flow, flow_function, FlowFunction
 
 
 @flow_function()

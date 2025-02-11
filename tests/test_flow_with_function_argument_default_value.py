@@ -3,8 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import unittest
 
-from flow_compose import flow
-from flow_compose.implementation.flow_function import Argument
+from flow_compose import flow, Argument
 
 
 class TestFlowWithFunctionArgumentDefaultValue(unittest.TestCase):

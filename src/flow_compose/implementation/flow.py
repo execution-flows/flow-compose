@@ -15,14 +15,11 @@ from flow_compose.implementation.flow_function import (
     FlowContext,
 )
 
-_FLOW_RUN_ID: int = 0
-
 
 def annotation(
     **flow_functions_configuration: FlowFunction[Any],
 ) -> Callable[[Callable[..., ReturnType]], Callable[..., ReturnType]]:
     def wrapper(wrapped_flow: Callable[..., ReturnType]) -> Callable[..., ReturnType]:
-        global _FLOW_RUN_ID
         all_parameters = inspect.signature(wrapped_flow).parameters.values()
         flow_functions_parameters: list[inspect.Parameter] = []
         non_flow_functions_parameters: list[inspect.Parameter] = []
@@ -106,9 +103,6 @@ def annotation(
             ),
         )
         def flow_invoker(**kwargs: Any) -> ReturnType:
-            global _FLOW_RUN_ID
-            _FLOW_RUN_ID += 1
-
             flow_context = FlowContext()
 
             cached_flow_functions: list[FlowFunction[Any]] = []
