@@ -26,3 +26,8 @@ class TestFlowWithArgumentDefaultValue(unittest.TestCase):
     def test_flow_with_argument_default_value(self):
         hello_world()
         greet_using_greeting_mock.assert_called_once_with("Hello World!")
+
+        greet_using_greeting_mock.reset_mock()
+
+        hello_world(greeting="Hello World2!")
+        greet_using_greeting_mock.assert_called_once_with("Hello World2!")
