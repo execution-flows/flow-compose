@@ -16,7 +16,6 @@ class TestFlowWithFunctionArgumentDefaultValue(unittest.TestCase):
         ):
 
             @flow(
-                None,
                 greeting=Argument(str),
             )
             def hello_world(greeting="Hello World!") -> None:

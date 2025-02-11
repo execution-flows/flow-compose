@@ -2,13 +2,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
-from typing import Any, get_origin, Type
+from typing import Any, get_origin
 
 from collections.abc import Callable
 
 from flow_compose.extensions.makefun_extension import with_signature
 from flow_compose.types import (
-    FlowFunctionType,
     ReturnType,
 )
 from flow_compose.implementation.flow_function import (
@@ -20,10 +19,9 @@ from flow_compose.implementation.flow_function import (
 
 
 def annotation(
-    _return_type: Type[ReturnType],
     **flow_functions_configuration: FlowFunction[Any],
-) -> Callable[[FlowFunctionType], Callable[..., Any]]:
-    def wrapper(wrapped_flow: FlowFunctionType) -> Callable[..., ReturnType]:
+) -> Callable[[Callable[..., ReturnType]], Callable[..., ReturnType]]:
+    def wrapper(wrapped_flow: Callable[..., ReturnType]) -> Callable[..., ReturnType]:
         all_parameters = inspect.signature(wrapped_flow).parameters.values()
         flow_functions_parameters: list[inspect.Parameter] = []
         non_flow_functions_parameters: list[inspect.Parameter] = []

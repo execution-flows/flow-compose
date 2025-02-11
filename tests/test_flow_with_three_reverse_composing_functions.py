@@ -11,25 +11,24 @@ composing2_mock = Mock()
 composing3_mock = Mock()
 
 
-@flow_function(str)
+@flow_function()
 def composing3_impl() -> str:
     composing3_mock()
     return "Hello world!"
 
 
-@flow_function(str)
+@flow_function()
 def composing2_impl(composing3: FlowFunction[str]) -> str:
     composing2_mock()
     return composing3()
 
 
-@flow_function(None)
+@flow_function()
 def composing1_impl(composing2: FlowFunction[str]) -> None:
     composing1_mock(composing2())
 
 
 @flow(
-    None,
     composing2=composing2_impl,
     composing3=composing3_impl,
 )
