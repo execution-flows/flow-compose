@@ -31,7 +31,13 @@ def annotation(
         # the next flag tells us when we are in flow_function arguments
         flow_functions_argument_found = False
         for parameter in all_parameters:
-            if not callable(parameter.default):
+            parameter_origin = get_origin(parameter.annotation)
+            is_parameter_flow_function = (
+                FlowFunction == parameter_origin
+                or FlowFunction == parameter.annotation
+                or isinstance(parameter.default, FlowFunction)
+            )
+            if not is_parameter_flow_function:
                 if flow_functions_argument_found:
                     raise AssertionError(
                         "flow has to have all non-flow-function arguments before flow function arguments."
