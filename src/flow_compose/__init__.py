@@ -5,7 +5,7 @@ from flow_compose.implementation.flow import annotation as flow
 from flow_compose.implementation.flow_function import (
     annotation as flow_function,
     FlowFunction,
-    Argument,
+    FlowArgument,
 )
 from flow_compose.types import ReturnType
 
@@ -15,5 +15,5 @@ __all__ = [
     "flow_function",
     "ReturnType",
     "FlowFunction",
-    "Argument",
+    "FlowArgument",
 ]

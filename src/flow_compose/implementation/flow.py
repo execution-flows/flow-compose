@@ -12,7 +12,7 @@ from flow_compose.types import (
 )
 from flow_compose.implementation.flow_function import (
     FlowFunction,
-    Argument,
+    FlowArgument,
     FlowFunctionInvoker,
     FlowContext,
 )
@@ -55,12 +55,12 @@ def annotation(
 
             parameter_origin = get_origin(parameter.annotation)
             is_parameter_argument = (
-                Argument == parameter_origin
-                or Argument == parameter.annotation
-                or isinstance(parameter.default, Argument)
+                FlowArgument == parameter_origin
+                or FlowArgument == parameter.annotation
+                or isinstance(parameter.default, FlowArgument)
             )
             if is_parameter_argument:
-                if isinstance(parameter.default, Argument):
+                if isinstance(parameter.default, FlowArgument):
                     parameter.default.name = parameter.name
                 non_flow_functions_parameters.append(parameter)
                 flow_function_arguments.add(parameter.name)
@@ -70,13 +70,13 @@ def annotation(
         flow_functions_argument_parameters_without_default: list[inspect.Parameter] = []
         flow_functions_argument_parameters_with_default: list[inspect.Parameter] = []
         non_flow_function_arguments: list[
-            Argument[Any]
+            FlowArgument[Any]
         ] = []  # Argument in configuration that are not flow argument
         for (
             flow_function_name,
             flow_function_configuration,
         ) in flow_functions_configuration.items():
-            if not isinstance(flow_function_configuration, Argument):
+            if not isinstance(flow_function_configuration, FlowArgument):
                 continue
 
             flow_function_configuration.name = flow_function_name

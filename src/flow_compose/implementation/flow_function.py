@@ -119,7 +119,7 @@ def annotation(
     return wrapper
 
 
-class Argument(FlowFunction[ReturnType], Generic[ReturnType]):
+class FlowArgument(FlowFunction[ReturnType], Generic[ReturnType]):
     def __init__(
         self,
         argument_type: Type[ReturnType],
@@ -179,7 +179,7 @@ class FlowFunctionInvoker(Generic[ReturnType]):
 
     def __call__(self, *args: Any, **kwargs: Any) -> ReturnType:
         if not self._flow_function.cached:
-            if not isinstance(self._flow_function, Argument):
+            if not isinstance(self._flow_function, FlowArgument):
                 kwargs["flow_context"] = self._flow_context
             return self._flow_function(*args, **kwargs)
 
