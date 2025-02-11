@@ -140,7 +140,6 @@ class Argument(FlowFunction[ReturnType], Generic[ReturnType]):
     @property
     def value(self) -> ReturnType:
         assert self.__value is not inspect.Parameter.empty
-        assert isinstance(self.__value, self.argument_type)
         return self.__value
 
     @value.setter
