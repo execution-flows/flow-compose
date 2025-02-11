@@ -9,12 +9,12 @@ from flow_compose import flow, flow_function, FlowFunction
 greet_hello_world_mock = Mock()
 
 
-@flow_function()
+@flow_function(None)
 def greet_hello_world() -> None:
     greet_hello_world_mock()
 
 
-@flow()
+@flow(None)
 def hello_world(greet: FlowFunction[None] = greet_hello_world) -> None:
     greet()
 
