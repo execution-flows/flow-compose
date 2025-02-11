@@ -100,7 +100,10 @@ def annotation(
                     continue
 
                 kwargs[parameter.name] = (
-                    parameter.default
+                    FlowFunctionInvoker(
+                        flow_function=parameter.default,
+                        flow_context=flow_context,
+                    )
                     if isinstance(parameter.default, FlowFunction)
                     else flow_context[parameter.name]
                 )
