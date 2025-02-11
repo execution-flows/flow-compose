@@ -6,12 +6,12 @@ import unittest
 from flow_compose import flow, flow_function, FlowFunction
 
 
-@flow_function(None)
+@flow_function()
 def greet_using_greeting(greeting: FlowFunction[str]) -> None:
     greeting()
 
 
-@flow(None)
+@flow()
 def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
     greet()
 
