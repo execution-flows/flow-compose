@@ -4,7 +4,7 @@
 import inspect
 from typing import Callable, Any, get_origin
 
-from extensions.makefun_extension import with_signature
+from flow_compose.extensions.makefun_extension import with_signature
 from flow_compose.types import (
     ReturnType,
 )
