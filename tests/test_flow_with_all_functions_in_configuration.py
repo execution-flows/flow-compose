@@ -4,8 +4,7 @@
 import unittest
 from unittest.mock import Mock
 
-from flow_compose import flow, flow_function
-from flow_compose.implementation.flow_function import FlowFunction
+from flow_compose import flow, flow_function, FlowFunction
 
 greet_hello_world_mock = Mock()
 greet_using_greeting_mock = Mock()
