@@ -10,13 +10,13 @@ greet_hello_world_mock = Mock()
 greet_using_greeting_mock = Mock()
 
 
-@flow_function(cached=True)
+@flow_function(str, cached=True)
 def greeting_hello_world() -> str:
     greet_hello_world_mock()
     return "Hello World!"
 
 
-@flow_function()
+@flow_function(None)
 def greet_using_greeting(greeting: FlowFunction[str]) -> None:
     greeting_once = greeting()
     greeting_twice = greeting()
@@ -25,6 +25,7 @@ def greet_using_greeting(greeting: FlowFunction[str]) -> None:
 
 
 @flow(
+    None,
     greeting=greeting_hello_world,
 )
 def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:

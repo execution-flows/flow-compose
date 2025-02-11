@@ -7,7 +7,7 @@ from typing import Callable, Any, Generic, Type
 from typing import get_origin
 
 from flow_compose.extensions.makefun_extension import with_signature
-from flow_compose.types import ReturnType
+from flow_compose.types import ReturnType, FlowFunctionType
 
 
 class FlowContext(dict[str, "FlowFunctionInvoker[Any]"]):
@@ -35,9 +35,11 @@ class FlowFunction(Generic[ReturnType]):
         return [p for p in self._flow_function_signature.parameters.values()]
 
 
-def annotation(cached: bool = False) -> Callable[..., FlowFunction[ReturnType]]:
+def annotation(
+    _return_type: Type[ReturnType], cached: bool = False
+) -> Callable[[FlowFunctionType], FlowFunction[ReturnType]]:
     def wrapper(
-        wrapped_flow_function: Callable[..., ReturnType],
+        wrapped_flow_function: FlowFunctionType,
     ) -> FlowFunction[ReturnType]:
         all_parameters = inspect.signature(wrapped_flow_function).parameters.values()
         flow_functions_parameters = []
