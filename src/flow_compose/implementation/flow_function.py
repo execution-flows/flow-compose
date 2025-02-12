@@ -4,10 +4,10 @@
 import inspect
 from functools import cached_property
 from typing import Any, Generic, Type
-from typing import get_origin
 from collections.abc import Callable
 
 from flow_compose.extensions.makefun_extension import with_signature
+from flow_compose.implementation.helpers import is_parameter_subclass_type
 from flow_compose.types import ReturnType
 
 
@@ -49,13 +49,7 @@ def annotation(
         # the next flag tells us when we are in flow_function arguments
         flow_functions_argument_found = False
         for parameter in all_parameters:
-            parameter_origin = get_origin(parameter.annotation)
-            is_parameter_flow_function = (
-                FlowFunction == parameter_origin
-                or FlowFunction == parameter.annotation
-                or isinstance(parameter.default, FlowFunction)
-            )
-            if not is_parameter_flow_function:
+            if not is_parameter_subclass_type(parameter, FlowFunction):
                 if flow_functions_argument_found:
                     raise AssertionError(
                         "flow function has to have all non-flow-function arguments before flow function arguments."

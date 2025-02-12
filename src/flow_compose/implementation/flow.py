@@ -2,11 +2,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
-from typing import Any, get_origin
+from typing import Any, get_args
 
 from collections.abc import Callable
 
 from flow_compose.extensions.makefun_extension import with_signature
+from flow_compose.implementation.helpers import is_parameter_subclass_type
 from flow_compose.types import (
     ReturnType,
 )
@@ -30,13 +31,7 @@ def annotation(
         # the next flag tells us when we are in flow_function arguments
         flow_functions_argument_found = False
         for parameter in all_parameters:
-            parameter_origin = get_origin(parameter.annotation)
-            is_parameter_flow_function = (
-                FlowFunction == parameter_origin
-                or FlowFunction == parameter.annotation
-                or isinstance(parameter.default, FlowFunction)
-            )
-            if not is_parameter_flow_function:
+            if not is_parameter_subclass_type(parameter, FlowFunction):
                 if flow_functions_argument_found:
                     raise AssertionError(
                         "flow has to have all non-flow-function arguments before flow function arguments."
@@ -53,13 +48,7 @@ def annotation(
 
             flow_functions_argument_found = True
 
-            parameter_origin = get_origin(parameter.annotation)
-            is_parameter_argument = (
-                FlowArgument == parameter_origin
-                or FlowArgument == parameter.annotation
-                or isinstance(parameter.default, FlowArgument)
-            )
-            if is_parameter_argument:
+            if is_parameter_subclass_type(parameter, FlowArgument):
                 if isinstance(parameter.default, FlowArgument):
                     parameter.default.name = parameter.name
                 non_flow_functions_parameters.append(parameter)
@@ -132,6 +121,13 @@ def annotation(
                     continue
 
                 if flow_function_parameter.name in kwargs:
+                    if not isinstance(
+                        kwargs[flow_function_parameter.name], FlowFunction
+                    ):
+                        kwargs[flow_function_parameter.name] = FlowArgument(
+                            get_args(flow_function_parameter.annotation)[0],
+                            value=kwargs[flow_function_parameter.name],
+                        )
                     flow_context[flow_function_parameter.name] = FlowFunctionInvoker(
                         flow_function=kwargs[flow_function_parameter.name],
                         flow_context=flow_context,
