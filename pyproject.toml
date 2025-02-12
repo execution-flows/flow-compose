@@ -9,7 +9,7 @@ repository = "https://github.com/execution-flows/flow-compose"
 homepage = "https://github.com/execution-flows/flow-compose"
 
 [tool.poetry.dependencies]
-python = ">3.10"
+python = ">=3.10"
 
 makefun = "^1.15.6"
 
