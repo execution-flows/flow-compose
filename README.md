@@ -61,9 +61,9 @@ def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
 hello_world()
 ``` 
 > Example tests: 
-> * [test_flow_with_nullary_function.py](tests/test_flow_with_nullary_function.py)
-> * [test_flow_with_function_composing_another_function.py](tests/test_flow_with_function_composing_another_function.py)
-> * [test_flow_with_function_composing_another_function_with_arguments.py](tests/test_flow_with_function_composing_another_function_with_arguments.py) 
+> * [Test Flow with Nullary Function](tests/test_flow_with_nullary_function.py)
+> * [Test Flow with Function Composing Another Function](tests/test_flow_with_function_composing_another_function.py)
+> * [Test Flow with Function Composing Another Function with Arguments](tests/test_flow_with_function_composing_another_function_with_arguments.py) 
 
 
 ### A Quick Overview
@@ -105,7 +105,8 @@ hello_world_in_spanish()
 ``` 
 
 > Example tests: 
-> * [test_flow_with_three_reverse_composing_functions.py](tests/test_flow_with_three_reverse_composing_functions.py), [test_flow_with_function_composing_another_function_with_arguments_with_default_values.py](tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
+> * [Test Flow with Three Reverse Composing Functions](tests/test_flow_with_three_reverse_composing_functions.py)
+> * [Test Flow with Function Composing Another Function with Default Values](tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
 
 ### Flow Arguments
 
@@ -120,7 +121,7 @@ greet("Hello, World!")
 ```
 
 > Example test: 
-> * [test_flow_with_non_flow_function_argument.py](tests/test_flow_with_non_flow_function_argument.py)
+> * [Test Flow with Non Flow Function Argument](tests/test_flow_with_non_flow_function_argument.py)
 
 However, to propagate these arguments to other functions within the flow, you must define the argument in the flow configuration as a `FlowArgument` object.  
 
@@ -156,11 +157,11 @@ greet_in_user_language__by_user_email(
 ``` 
 
 > Example tests: 
-> * [test_flow_with_all_functions_in_configuration.py](tests/test_flow_with_all_functions_in_configuration.py)
-> * [test_flow_with_argument_used_in_the_flow.py](tests/test_flow_with_argument_used_in_the_flow.py)
-> * [test_flow_with_cached_flow_function.py](tests/test_flow_with_cached_flow_function.py)
-> * [test_flow_with_argument_default_value_overridden_by_invocation.py](tests/test_flow_with_argument_default_value_overridden_by_invocation.py)
-> * [test_flow_with_cached_flow_function_with_argument.py](tests/test_flow_with_cached_flow_function_with_argument.py)
+> * [Test Flow with All Functions In Configuration](tests/test_flow_with_all_functions_in_configuration.py)
+> * [Test Flow with Argument Used In The Flow](tests/test_flow_with_argument_used_in_the_flow.py)
+> * [Test Flow with Cached Flow Function](tests/test_flow_with_cached_flow_function.py)
+> * [Test Flow with Argument Default Value Overridden By Invocation](tests/test_flow_with_argument_default_value_overridden_by_invocation.py)
+> * [Test Flow with Cached Flow Function With Argument](tests/test_flow_with_cached_flow_function_with_argument.py)
 
 ### A Quick Overview
 
@@ -263,7 +264,7 @@ def hello_world(greet: FlowFunction[None]) -> None:
 ```
 
 > Example tests:
-> * [test_flow_with_configuration_as_dictionary.py](tests/test_flow_with_configuration_as_dictionary.py)
+> * [Test Flow With Configuration As Dictionary](tests/test_flow_with_configuration_as_dictionary.py)
 
 Handling a configuration as a dictionary opens all kinds of possibilities. Remember: the Python interpreter loads flow configuration during module loading time, not run time.
 
@@ -360,6 +361,6 @@ def flow_function_name(
 
 ## What's next?
 
-* To support this project, please give us a star on [Github](https://github.com/execution-flows/flow-compose).
+* To support this project, please give us a star on [GitHub](https://github.com/execution-flows/flow-compose).
 * If you want to start using _flow-compose_, let us know how we can help by emailing [Vinko Buble](emailto:vinkobuble@gmail.com).
 * If you are already using _flow-compose_, please share your feedback with [Vinko Buble](emailto:vinkobuble@gmail.com).
