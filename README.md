@@ -189,7 +189,40 @@ The `greet_in_user_language__by_user_email` flow now provides much more function
 #### 7. Caching:  
    - The `cached` argument ensures that a flow function is executed only once during a single flow execution. The result from the first execution is cached and reused in subsequent calls.
 
-### A variation to the flow
+## Flow-to-Flow composition
+
+To call another flow, simply add it to the configuration wrapped in the `Flow` object.
+
+```python
+from flow_compose import flow, flow_function, Flow, FlowFunction
+
+@flow_function()
+def greeting_hello_world() -> str:
+    return "Hello, World!"
+
+@flow(
+    greeting=greeting_hello_world,
+)
+def hello_world_greeting(greeting: FlowFunction[str]) -> str:
+    return greeting()
+
+@flow(
+    greeting=Flow(hello_world_greeting),
+)
+def hello_world(greeting: FlowFunction[str]) -> None:
+    print(greeting())
+```
+
+The `hello_world_greeting` flow has its own context; the context from the `hello_world` flow is not propagated to the invoked flow.
+
+> Example tests:
+> * [Test Flow Composing Another Flow](tests/test_flow_composing_another_flow.py)
+> * [Test Flow Composing Another Flow With Non Flow Function Argument](tests/test_flow_composing_another_flow_with_non_flow_function_argument.py)
+> * [Test Flow Composing Another Flow With Flow Argument](tests/test_flow_composing_another_flow_with_flow_argument.py)
+> * [Test Flow Composing Another Flow And Using It In The Body](tests/test_flow_composing_another_flow_and_using_it_in_the_body.py)
+> * [Test Flow Composing Another Cached Flow](tests/test_flow_composing_another_cached_flow.py)
+
+### A Variation to the Flow
 
 ```python
 @flow_function()
@@ -245,6 +278,7 @@ from flow_compose import flow, FlowArgument, FlowFunction
 @flow(
     flow_argument_alias=FlowArgument(T, default=argument_value),
     flow_function_alias=concrete_flow_function_name,
+    flow_alias=Flow(concrete_flow_name, cached: bool = False),
 )
 def flow_name(
     standard_python_argument: T,
@@ -269,6 +303,14 @@ __Note:__ The type parameter `T` can represent any kind of Python type.
 2. **`flow_function_alias`**
   * An alias for a flow function that is accessible to all `flow_functions` in the flow.
   * The value, referred to as `concrete_flow_function_name`, must be a flow function — that is, a function decorated with the `@flow_function` decorator.
+
+3. **`flow_alias`**
+  * An alias for a flow that can be called just like any other flow function using its alias.
+  * It is accessible to all flow functions within the flow.
+  * The value, referred to as `concrete_flow_name`, must be a flow — that is, a function decorated with the `@flow` decorator.
+  * The corresponding value, referred to as `concrete_flow_name`, must be a flow — that is, a function decorated with the `@flow` decorator.
+  * The `cached` flag is used in the same way as it is with the `@flow_function` decorator.
+  * A composed flow has its own context; the context from the originating flow is not propagated to the invoked flow. 
 
 #### The Arguments of the Flow Body
 
