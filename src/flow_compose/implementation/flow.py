@@ -120,7 +120,7 @@ def annotation(
                     ):
                         kwargs[flow_function_parameter.name] = FlowArgument(
                             get_args(flow_function_parameter.annotation)[0],
-                            value=kwargs[flow_function_parameter.name],
+                            default=kwargs[flow_function_parameter.name],
                         )
                     flow_context[flow_function_parameter.name] = FlowFunctionInvoker(
                         flow_function=kwargs[flow_function_parameter.name],
