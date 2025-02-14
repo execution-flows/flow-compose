@@ -120,9 +120,9 @@ class FlowArgument(FlowFunction[ReturnType], Generic[ReturnType]):
     def __init__(
         self,
         argument_type: Type[ReturnType],
-        value: ReturnType | Any = inspect.Parameter.empty,
+        default: ReturnType | Any = inspect.Parameter.empty,
     ) -> None:
-        self.__value = value
+        self.__default = default
         self.__name: str | None = None
         self._argument_type = argument_type
         super().__init__(
@@ -135,16 +135,16 @@ class FlowArgument(FlowFunction[ReturnType], Generic[ReturnType]):
 
     @property
     def value_or_empty(self) -> ReturnType | Any:
-        return self.__value
+        return self.__default
 
     @property
     def value(self) -> ReturnType:
-        assert self.__value is not inspect.Parameter.empty
-        return self.__value
+        assert self.__default is not inspect.Parameter.empty
+        return self.__default
 
     @value.setter
     def value(self, value: ReturnType) -> None:
-        self.__value = value
+        self.__default = value
 
     @property
     def name(self) -> str:
