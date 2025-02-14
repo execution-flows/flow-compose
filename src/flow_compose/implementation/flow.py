@@ -96,8 +96,6 @@ def annotation(
         def flow_invoker(**kwargs: Any) -> ReturnType:
             flow_context = FlowContext()
 
-            cached_flow_functions: list[FlowFunction[Any]] = []
-
             for configured_flow_function in flow_functions_configuration:
                 flow_context[configured_flow_function] = FlowFunctionInvoker(
                     flow_function=flow_functions_configuration[
@@ -105,10 +103,6 @@ def annotation(
                     ],
                     flow_context=flow_context,
                 )
-                if flow_functions_configuration[configured_flow_function].cached:
-                    cached_flow_functions.append(
-                        flow_functions_configuration[configured_flow_function]
-                    )
 
             missing_flow_arguments: list[str] = []
             for flow_function_parameter in flow_functions_parameters:
@@ -132,24 +126,25 @@ def annotation(
                         flow_function=kwargs[flow_function_parameter.name],
                         flow_context=flow_context,
                     )
-
-                else:
-                    if flow_function_parameter.default is not inspect.Parameter.empty:
-                        flow_context[flow_function_parameter.name] = (
-                            FlowFunctionInvoker(
-                                flow_function=flow_function_parameter.default,
-                                flow_context=flow_context,
-                            )
-                        )
-
-                        if flow_function_parameter.default.cached:
-                            cached_flow_functions.append(
-                                flow_function_parameter.default
-                            )
-
                     kwargs[flow_function_parameter.name] = flow_context[
                         flow_function_parameter.name
                     ]
+
+                else:
+                    if flow_function_parameter.default is not inspect.Parameter.empty:
+                        default_parameter_invoker = FlowFunctionInvoker(
+                            flow_function=flow_function_parameter.default,
+                            flow_context=flow_context,
+                        )
+                        if flow_function_parameter.name not in flow_context:
+                            flow_context[flow_function_parameter.name] = (
+                                default_parameter_invoker
+                            )
+                        kwargs[flow_function_parameter.name] = default_parameter_invoker
+                    else:
+                        kwargs[flow_function_parameter.name] = flow_context[
+                            flow_function_parameter.name
+                        ]
 
             if len(missing_flow_arguments) > 0:
                 raise AssertionError(
