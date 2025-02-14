@@ -23,5 +23,5 @@ def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
 
 class TestFlowWithArgumentDefaultValueOverriddenByInvocation(unittest.TestCase):
     def test_flow_with_argument_default_value_overridden_by_invocation(self):
-        hello_world(greeting="Hola, Mundi!")
-        greet_using_greeting_mock.assert_called_once_with("Hola, Mundi!")
+        hello_world(greeting="Hola, Mundo!")
+        greet_using_greeting_mock.assert_called_once_with("Hola, Mundo!")

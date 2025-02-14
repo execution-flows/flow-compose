@@ -72,13 +72,15 @@ hello_world()
 1. `greeting` is an alias name for the `greeting_hello_world` flow function.
 2. `greet` is an alias name for the `greet_using_greeting` flow function.
 3. The purpose of alias function names is to separate concrete function implementation from the invocation of a composed function.
+4. `flow-compose` changes the external signature of functions decorated with `@flow` or `@flow_function` decorators so they can be called without arguments that will be passed by `flow-compose`.
+5. In this example, although `hello_world` has one argument, because the argument is annotated with `FlowFunction`, `flow-compose` removes it from the exposed function signature, so you can invoke without arguments like `hello_world()`.
+6. `flow-compose` will pass `greet: FlowFunction` from the flow configuration to the body of the flow.
 
-This approach might look like an overkill, but we do this to give the `greet` function the ability to greet different `greetings` without changing the `greet` function. And without changing the way we invoke the `hello_world` function.    
+This approach might look like an overkill, but we do this to give the `greet_using_greeting` function the ability to greet different `greetings` without changing the `greet_using_greeting` function or changing the way we invoke the `hello_world` function.    
 
-The main difference here is that `greet_using_greeting` does not specify which `greeting` it will use. `flow-compose` sends the `greeting` function to the `greet_using_greeting` based on the top-level flow configuration. That is the whole point of `flow-compose` and composing function through the flow configuration.
+The `greet_using_greeting` flow function does not specify which `greeting` it will use. `flow-compose` sends the `greeting` function to the `greet_using_greeting` based on the top-level flow configuration - `greeting_hello_world`.
 
-The flow configuration now defines which `greeting` will be printed by the `greet_using_greeting` function.
-Different flows can define different `greetings` without changing the `greet_using_greeting` function.
+Different flows can define different `greeting` functions without changing the `greet_using_greeting` function.
 
 ```python
 @flow_function()
@@ -100,7 +102,7 @@ hello_world_in_spanish()
 > Example tests: 
 > * [test_flow_with_three_reverse_composing_functions.py](tests/test_flow_with_three_reverse_composing_functions.py), [test_flow_with_function_composing_another_function_with_arguments_with_default_values.py](tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
 
-### Flow argument
+### Flow arguments
 
 Passing arguments to a flow function is the same as with any function.
 
@@ -115,7 +117,7 @@ greet("Hello, World!")
 > Example test: 
 > * [test_flow_with_non_flow_function_argument.py](tests/test_flow_with_non_flow_function_argument.py)
 
-But to make flow propagate argument to other functions in the flow, we have to define the argument in the flow configuration as a `FlowArgument` object.  
+But to make the flow propagate arguments to other functions in the flow, we have to define the argument in the flow configuration as a `FlowArgument` object.  
 
 ```python
 @flow_function(cached=True)
@@ -159,11 +161,13 @@ greet_in_user_language__by_user_email(
 
 The `greet_in_user_language__by_user_email` flow has much more functionality, but we did not need to change the `greet_using_greeting` function to accommodate new functionality.
 
-1. `user_email` is defined as a `FlowArgument`. `FlowArgument` is a subclass of a `FlowFunction`. To invoke the flow you must pass it as a keyword argument. 
+1. `user_email` is defined as a `FlowArgument`. `FlowArgument` is a subclass of a `FlowFunction`. Now, to invoke the flow you must pass `user_email` as a keyword argument. 
 2. `user_email` is part of the flow configuration, and any flow function can access it.
-3. `user`, `user_language`, `greeting`, and `greet` are aliases configured in the `flow` configuration.
-4. Any flow function can access any other flow function from the flow configuration by adding an argument named the same as the flow function alias and annotated with `FlowFunction`.
-5. The `cached` argument ensures that a `flow_function` gets called only once during one flow execution. The result of the first execution is cached and returned in subsequent executions.  
+3. `user`, `user_language`, `greeting`, and `greet` are flow function aliases configured in the `flow` configuration.
+4. `user__using_user_email`, `user_language__using_user`, and `greeting__from_international_greeting_database__using_user_language` flow functions are unaware of one another.
+5. Any flow function can access any other flow function defined in the flow configuration by adding an argument annotated with `FlowFunction` and named the same as the flow function alias name.
+6. Flow functions do not know which concrete implementation the alias name points to in the flow configuration.
+7. The `cached` argument ensures that a `flow_function` gets called only once during single flow execution. The result of the first execution is cached and returned in subsequent executions.  
 
 ### A variation to the flow
 
@@ -188,13 +192,13 @@ greet_in_user_language__by_user_id(
 )
 ```
 
-We changed the `FlowArgument` and added the `user__using_user_id` function to deliver this variation. For example, a third variation could get `user_language` from the HTTP request header. Or we can get a user object from the HTTP session. All other functions will always stay the same.
+We changed the `FlowArgument` from `user_email` to `user_id` and added the `user__using_user_id` function to deliver this variation. For example, the next variation could get `user_language` from the HTTP request header. Or we can get a user object from the HTTP session. All other functions will always stay the same.
 
 To deliver the next flow variation, we only need to duplicate a configuration and pass it in the flow decorator—you will never have to copy/paste functions you already have. You only add new functions.
 
 ### Reusing flow configurations
 
-A configuration is a `**kwargs` argument passed to a Python function. So it can be declared as a dictionary.
+A configuration is an `**kwargs` argument passed to a Python function. So it can be declared as a dictionary.
 
 ```python
 flow_configuration = {
@@ -209,7 +213,7 @@ def hello_world(greet: FlowFunction[None]) -> None:
 > Example tests:
 > * [test_flow_with_configuration_as_dictionary.py](tests/test_flow_with_configuration_as_dictionary.py)
 
-Handling a configuration as a dictionary opens all kinds of possibilities. But remember: the Python interpreter loads flow configuration during module loading time, not run time.
+Handling a configuration as a dictionary opens all kinds of possibilities. Remember: the Python interpreter loads flow configuration during module loading time, not run time.
 
 ## Reference
 
@@ -234,28 +238,28 @@ __Note:__ Type `T` represents any kind of Python type.
 
 #### Flow configuration
 
-1.`flow_argument_alias` - is an alias name for an input flow argument that you must send as an argument of the flow invocation. 
-   * The `T` type is the type of the argument.
+1.`flow_argument_alias` - is an alias name for an input flow argument that you must send as an argument during the flow invocation. 
+  * The `T` type is the type of the argument.
   * The first argument in the `FlowArgument` construction is the flow argument type.
   * `value` argument is optional and defines its value when it is missing in the invocation arguments.
   * It is available to all flow functions in the flow.
-  * It is a `callable`. You must call it `flow_argument_alias()` to get its value.
+  * It is a `callable`. You must invoke it to get its value: `flow_argument_alias()`.
 
 2.`flow_function_alias` - An alias name for a flow function that is available to all `flow_functions` in the `flow`.
   * The value, marked as `concrete_flow_function_name`, has to be a flow function - a function that is decorated with `@flow_function` decorator.
 
-#### Flow function arguments
+#### The arguments of the flow body
 
 1. `standard_python_argument` - a standard Python function argument of any valid Python type passed during flow function invocation.
-   * Available only in the body of the flow function.
+   * Available only in the body of the flow.
    * It is not part of the flow configuration. 
    * Therefore, it is not available to other flow functions in the flow.
 
-2. `flow_function_alias` - An alias name for a flow function that is available to all `flow_functions` in the flow.
-   * The value, marked as `concrete_flow_function_name`, must be a flow function - a function decorated with a `@flow_function` decorator.
+2. `flow_argument` - An alias name for a flow argument that defined in the flow configuration.
+   * The `T` type is the type of the argument.
 
 3. `flow_function` - a flow function defined in the flow configuration made available to the code in the flow function body.
-   * When the `flow_function` has a default value, that default value is only used in the flow function body. The rest of the flow functions have access to the definition from the flow configuration.
+   * When the `flow_function` has a default value marked as `optional_flow_function_configuration_override` in the reference code, you can use it in the flow body. The rest of the flow functions have access to the definition from the flow configuration.
    * The `T` type is the return type of the function.
 
 ### flow function
@@ -284,7 +288,7 @@ def flow_function_name(
    * It is not available to other flow functions in the flow.
 
 3. `flow_function` - a flow function defined in the flow configuration made available to the code in the flow function body.
-   * When the `flow_function` has a default value, that default value is used in the flow function body. The rest of the flow functions have access to the definition from the flow configuration.
+   * When the `flow_function` has a default value marked as `optional_flow_function_configuration_override` in the reference code, you can use it in the flow body. The rest of the flow functions have access to the definition from the flow configuration.
    * The `T` type is the return type of the function.
 
 ## What's next?
