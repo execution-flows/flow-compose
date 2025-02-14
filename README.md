@@ -18,7 +18,7 @@ pip install flow-compose
 
 ## Usage
 
-For examples of __flow-compose__ code, check the [test suite](./tests).
+For examples of __flow-compose__ code, check the [test suite](https://github.com/execution-flows/flow-compose/tree/main/tests).
 
 ### Simple Flow
 
@@ -61,9 +61,9 @@ def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
 hello_world()
 ``` 
 > Example tests: 
-> * [Test Flow with Nullary Function](tests/test_flow_with_nullary_function.py)
-> * [Test Flow with Function Composing Another Function](tests/test_flow_with_function_composing_another_function.py)
-> * [Test Flow with Function Composing Another Function with Arguments](tests/test_flow_with_function_composing_another_function_with_arguments.py) 
+> * [Test Flow with Nullary Function](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_nullary_function.py)
+> * [Test Flow with Function Composing Another Function](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_function_composing_another_function.py)
+> * [Test Flow with Function Composing Another Function with Arguments](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_function_composing_another_function_with_arguments.py) 
 
 
 ### A Quick Overview
@@ -105,8 +105,8 @@ hello_world_in_spanish()
 ``` 
 
 > Example tests: 
-> * [Test Flow with Three Reverse Composing Functions](tests/test_flow_with_three_reverse_composing_functions.py)
-> * [Test Flow with Function Composing Another Function with Default Values](tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
+> * [Test Flow with Three Reverse Composing Functions](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_three_reverse_composing_functions.py)
+> * [Test Flow with Function Composing Another Function with Default Values](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
 
 ### Flow Arguments
 
@@ -121,7 +121,7 @@ greet("Hello, World!")
 ```
 
 > Example test: 
-> * [Test Flow with Non Flow Function Argument](tests/test_flow_with_non_flow_function_argument.py)
+> * [Test Flow with Non Flow Function Argument](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_non_flow_function_argument.py)
 
 However, to propagate these arguments to other functions within the flow, you must define the argument in the flow configuration as a `FlowArgument` object.  
 
@@ -157,11 +157,11 @@ greet_in_user_language__by_user_email(
 ``` 
 
 > Example tests: 
-> * [Test Flow with All Functions In Configuration](tests/test_flow_with_all_functions_in_configuration.py)
-> * [Test Flow with Argument Used In The Flow](tests/test_flow_with_argument_used_in_the_flow.py)
-> * [Test Flow with Cached Flow Function](tests/test_flow_with_cached_flow_function.py)
-> * [Test Flow with Argument Default Value Overridden By Invocation](tests/test_flow_with_argument_default_value_overridden_by_invocation.py)
-> * [Test Flow with Cached Flow Function With Argument](tests/test_flow_with_cached_flow_function_with_argument.py)
+> * [Test Flow with All Functions In Configuration](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_all_functions_in_configuration.py)
+> * [Test Flow with Argument Used In The Flow](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_argument_used_in_the_flow.py)
+> * [Test Flow with Cached Flow Function](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_cached_flow_function.py)
+> * [Test Flow with Argument Default Value Overridden By Invocation](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_argument_default_value_overridden_by_invocation.py)
+> * [Test Flow with Cached Flow Function With Argument](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_cached_flow_function_with_argument.py)
 
 ### A Quick Overview
 
@@ -216,11 +216,11 @@ def hello_world(greeting: FlowFunction[str]) -> None:
 The `hello_world_greeting` flow has its own context; the context from the `hello_world` flow is not propagated to the invoked flow.
 
 > Example tests:
-> * [Test Flow Composing Another Flow](tests/test_flow_composing_another_flow.py)
-> * [Test Flow Composing Another Flow With Non Flow Function Argument](tests/test_flow_composing_another_flow_with_non_flow_function_argument.py)
-> * [Test Flow Composing Another Flow With Flow Argument](tests/test_flow_composing_another_flow_with_flow_argument.py)
-> * [Test Flow Composing Another Flow And Using It In The Body](tests/test_flow_composing_another_flow_and_using_it_in_the_body.py)
-> * [Test Flow Composing Another Cached Flow](tests/test_flow_composing_another_cached_flow.py)
+> * [Test Flow Composing Another Flow](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_composing_another_flow.py)
+> * [Test Flow Composing Another Flow With Non Flow Function Argument](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_composing_another_flow_with_non_flow_function_argument.py)
+> * [Test Flow Composing Another Flow With Flow Argument](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_composing_another_flow_with_flow_argument.py)
+> * [Test Flow Composing Another Flow And Using It In The Body](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_composing_another_flow_and_using_it_in_the_body.py)
+> * [Test Flow Composing Another Cached Flow](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_composing_another_cached_flow.py)
 
 ### A Variation to the Flow
 
@@ -264,7 +264,7 @@ def hello_world(greet: FlowFunction[None]) -> None:
 ```
 
 > Example tests:
-> * [Test Flow With Configuration As Dictionary](tests/test_flow_with_configuration_as_dictionary.py)
+> * [Test Flow With Configuration As Dictionary](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_with_configuration_as_dictionary.py)
 
 Handling a configuration as a dictionary opens all kinds of possibilities. Remember: the Python interpreter loads flow configuration during module loading time, not run time.
 
