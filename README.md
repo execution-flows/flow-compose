@@ -213,7 +213,7 @@ def hello_world(greeting: FlowFunction[str]) -> None:
     print(greeting())
 ```
 
-The `hello_world_greeting` flow has its own context; the context from the `hello_world` flow is not propagated to the invoked flow.
+The `hello_world_greeting` flow has its own context; the context from the `hello_world` flow is not propagated to the invoked flow. However, the arguments that composed flow requires are passed automatically to its invocation.
 
 > Example tests:
 > * [Test Flow Composing Another Flow](https://github.com/execution-flows/flow-compose/tree/main/tests/test_flow_composing_another_flow.py)
@@ -270,7 +270,7 @@ Handling a configuration as a dictionary opens all kinds of possibilities. Remem
 
 ## Reference
 
-### flow
+### @flow
 
 ```python
 from flow_compose import flow, FlowArgument, FlowFunction
@@ -307,7 +307,6 @@ __Note:__ The type parameter `T` can represent any kind of Python type.
 3. **`flow_alias`**
   * An alias for a flow that can be called just like any other flow function using its alias.
   * It is accessible to all flow functions within the flow.
-  * The value, referred to as `concrete_flow_name`, must be a flow — that is, a function decorated with the `@flow` decorator.
   * The corresponding value, referred to as `concrete_flow_name`, must be a flow — that is, a function decorated with the `@flow` decorator.
   * The `cached` flag is used in the same way as it is with the `@flow_function` decorator.
   * A composed flow has its own context; the context from the originating flow is not propagated to the invoked flow. 
@@ -317,7 +316,7 @@ __Note:__ The type parameter `T` can represent any kind of Python type.
 1. **`standard_python_argument`**  
   * A standard Python function argument of any valid Python type passed during flow function invocation.
   * Available only within the body of the flow.
-  * It is not part of the flow configuration and, therefore, is not accessible to other flow functions.
+  * It is not part of the flow configuration and, therefore, is not accessible to other flow functions unless explicitly passed as an argument.
 
 2. **`flow_argument`**  
   * An alias for a flow argument defined in the flow configuration.
@@ -328,7 +327,7 @@ __Note:__ The type parameter `T` can represent any kind of Python type.
   * When the `flow_function` has a default value, referred in the reference code as `optional_flow_function_configuration_override`, you can use it only in the flow body. The rest of the flow functions have access to the definition from the flow configuration.
   * The type parameter `T` represents the return type of the function.
 
-### flow function
+### @flow_function
 
 ```python
 from flow_compose import flow_function, FlowFunction
@@ -346,17 +345,19 @@ def flow_function_name(
   * **`cached`**
     * An optional argument with the default value `False`.  
     * When set to `True`, the function is executed only once during a single flow execution, and its return value is cached in the flow context for the duration of that execution.
+    * The cache key is based on the values of the function's input arguments, but only non-`FlowFunction` arguments are considered. For example, if there is an input argument `index: int`, the cache will differentiate based on different `index` values. However, if `index` is defined as `index: FlowFunction[int]`, it will not be used as part of the cache key. 
     * Use the `cached` flag when:
-      1. The function execution is expensive — such as reading from a database or sending a request to an external API—and the result remains unchanged during the flow execution.
+      1. The function execution is expensive — such as reading from a database or sending a request to an external API — and the result remains unchanged during the flow execution.
       2. You want the function to be idempotent — ensuring that, for example, a database record is created only once or updated only once.
 
   * **`standard_python_argument`**
     * A standard Python function argument of any valid type passed during flow function invocation.  
     * Available only within the body of the flow function.
-    * Not accessible to other flow functions in the flow.
+    * Not accessible to other flow functions in the flow unless explicitly passed as an argument.
 
-  * **`flow_function`** - a flow function defined in the flow configuration that is made available within the flow function body.  
-    * If a `flow_function` has a default value, referred in the reference code as `optional_flow_function_configuration_override`, you can use that override only in the function body. The rest of the flow functions have access to the definition from the flow configuration.
+  * **`flow_function`**
+    * A flow function defined in the flow configuration that is made available within the flow function body.  
+    * If a `flow_function` has a default value — referred to in the reference code as `optional_flow_function_configuration_override` — you can use that override only in the function body. All other flow functions will use the definition specified in the flow configuration.
     * The type parameter `T` represents the return type of the function.
 
 ## What's next?
