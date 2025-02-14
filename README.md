@@ -1,15 +1,14 @@
 # ___Flow Compose___ - configurable function composition.
 
-___Flow Compose___ provides functionality for one function to access and call other
-functions defined in the flow configuration. 
+___Flow Compose___ allows one function to access and call other functions through an alias name instead of referencing them directly.  
 
 ## Key Features
 
 * __Easy:__ Designed to be intuitive and easy to follow the code.
-* __FAST Execution:__ Most of the execution is performed during Python module load time, not runtime.
-* __Quick to learn:__ Start by writing a normal Python function and follow the example below to expand it into a flow and flowfunctions_.
-* __Fast to code:__ You write Python the same way as you would, with added high functions reusability.
-* __Python friendly:__ Uses Python best practices and rules.
+* __Fast execution:__ Most of the execution is performed during Python module load time, not runtime.
+* __Quick to learn:__ Start by writing a normal Python function and follow the example below to expand it into a flow with flow functions.
+* __Fast to code:__ You write Python the same way as you would. But with a high level of code reusability.
+* __Python friendly:__ Uses Python's best practices and rules.
 
 ## Installation
 
@@ -19,7 +18,7 @@ pip install flow-compose
 
 ## Usage
 
-For examples of __flow-compose__ code check the [test suite](./tests).
+For examples of __flow-compose__ code, check the [test suite](./tests).
 
 ### Simple flow
 
