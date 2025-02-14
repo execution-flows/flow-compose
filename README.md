@@ -257,30 +257,33 @@ __Note:__ The type parameter `T` can represent any kind of Python type.
 
 #### Flow Configuration
 
-1.`flow_argument_alias`
+1. **`flow_argument_alias`**
   * An alias for an input flow argument that you must provide during flow invocation. 
   * The type parameter `T` represents the type of the argument.
   * The first argument in the `FlowArgument` constructor is the flow argument type.
   * The optional `default` argument defines a default value if the argument is missing during invocation.
   * It is accessible to all flow functions within the flow.
-  * It is a `callable`. You must invoke it to get its value: `flow_argument_alias()`.
+  * Being a `callable`, you must invoke it to obtain its value (e.g., `flow_argument_alias()`).
 
-2.`flow_function_alias` - An alias name for a flow function that is available to all `flow_functions` in the `flow`.
-  * The value, marked as `concrete_flow_function_name`, has to be a flow function - a function that is decorated with `@flow_function` decorator.
+2. **`flow_function_alias`**
+  * An alias for a flow function that is accessible to all `flow_functions` in the flow.
+  * The value, referred to as `concrete_flow_function_name`, must be a flow function — that is, a function decorated with the `@flow_function` decorator.
 
 #### The Arguments of the Flow Body
 
-1. `standard_python_argument` - a standard Python function argument of any valid Python type passed during flow function invocation.
-   * Available only in the body of the flow.
-   * It is not part of the flow configuration. 
-   * Therefore, it is not available to other flow functions in the flow.
+1. **`standard_python_argument`**  
+  * A standard Python function argument of any valid Python type passed during flow function invocation.
+  * Available only within the body of the flow.
+  * It is not part of the flow configuration and, therefore, is not accessible to other flow functions.
 
-2. `flow_argument` - An alias name for a flow argument that defined in the flow configuration.
-   * The `T` type is the type of the argument.
+2. **`flow_argument`**  
+  * An alias for a flow argument defined in the flow configuration.
+  * The type parameter `T` represents the type of the argument.
 
-3. `flow_function` - a flow function defined in the flow configuration made available to the code in the flow function body.
-   * When the `flow_function` has a default value marked as `optional_flow_function_configuration_override` in the reference code, you can use it in the flow body. The rest of the flow functions have access to the definition from the flow configuration.
-   * The `T` type is the return type of the function.
+3. **`flow_function`**  
+  * A flow function defined in the flow configuration that is made available within the flow function body.
+  * When the `flow_function` has a default value, referred in the reference code as `optional_flow_function_configuration_override`, you can use it only in the flow body. The rest of the flow functions have access to the definition from the flow configuration.
+  * The type parameter `T` represents the return type of the function.
 
 ### flow function
 
@@ -297,19 +300,21 @@ def flow_function_name(
     ...
 ```
 
-1. `cached` - an optional argument with default value `False`.
-    * When set to `True`, the function will be called only once during a single flow execution, and the flow context will cache its return value for the duration of the flow execution.
-    * We set the `cached` flag to `True` when:
-      1. The function execution is expensive - like reading from a database or sending a request to an external API, and the result will not change during the flow execution.
-      2. We want to make the function idempotent - like when creating or updating a database record. We want to ensure we create only one record or update the same record only once.
+  * **`cached`**
+    * An optional argument with the default value `False`.  
+    * When set to `True`, the function is executed only once during a single flow execution, and its return value is cached in the flow context for the duration of that execution.
+    * Use the `cached` flag when:
+      1. The function execution is expensive — such as reading from a database or sending a request to an external API—and the result remains unchanged during the flow execution.
+      2. You want the function to be idempotent — ensuring that, for example, a database record is created only once or updated only once.
 
-2. `standard_python_argument` - a standard Python function argument of any valid Python type passed during flow function invocation.
-   * Available only in the body of the flow function.
-   * It is not available to other flow functions in the flow.
+  * **`standard_python_argument`**
+    * A standard Python function argument of any valid type passed during flow function invocation.  
+    * Available only within the body of the flow function.
+    * Not accessible to other flow functions in the flow.
 
-3. `flow_function` - a flow function defined in the flow configuration made available to the code in the flow function body.
-   * When the `flow_function` has a default value marked as `optional_flow_function_configuration_override` in the reference code, you can use it in the flow body. The rest of the flow functions have access to the definition from the flow configuration.
-   * The `T` type is the return type of the function.
+  * **`flow_function`** - a flow function defined in the flow configuration that is made available within the flow function body.  
+    * If a `flow_function` has a default value, referred in the reference code as `optional_flow_function_configuration_override`, you can use that override only in the function body. The rest of the flow functions have access to the definition from the flow configuration.
+    * The type parameter `T` represents the return type of the function.
 
 ## What's next?
 
