@@ -2,24 +2,23 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
+from collections.abc import Callable
 from typing import Any, get_args
 
-from collections.abc import Callable
-
 from flow_compose.extensions.makefun_extension import with_signature
+from flow_compose.implementation.classes.flow_argument import FlowArgument
+from flow_compose.implementation.classes.flow_function import FlowFunction
+from flow_compose.implementation.classes.flow_function_invoker import (
+    FlowFunctionInvoker,
+    FlowContext,
+)
 from flow_compose.implementation.helpers import is_parameter_subclass_type
 from flow_compose.types import (
     ReturnType,
 )
-from flow_compose.implementation.flow_function import (
-    FlowFunction,
-    FlowArgument,
-    FlowFunctionInvoker,
-    FlowContext,
-)
 
 
-def annotation(
+def decorator(
     **flow_functions_configuration: FlowFunction[Any],
 ) -> Callable[[Callable[..., ReturnType]], Callable[..., ReturnType]]:
     def wrapper(wrapped_flow: Callable[..., ReturnType]) -> Callable[..., ReturnType]:
