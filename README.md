@@ -61,9 +61,9 @@ def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
 hello_world()
 ``` 
 > Example tests: 
-> * [Test Flow With Nullary Function](tests/test_flow_with_nullary_function.py)
-> * [Test Flow With Function Composing Another Function](tests/test_flow_with_function_composing_another_function.py)
-> * [Test Flow With Function Composing Another Function With Arguments](tests/test_flow_with_function_composing_another_function_with_arguments.py) 
+> * [Test Flow with Nullary Function](tests/test_flow_with_nullary_function.py)
+> * [Test Flow with Function Composing Another Function](tests/test_flow_with_function_composing_another_function.py)
+> * [Test Flow with Function Composing Another Function with Arguments](tests/test_flow_with_function_composing_another_function_with_arguments.py) 
 
 
 ### A Quick Overview
@@ -105,8 +105,8 @@ hello_world_in_spanish()
 ``` 
 
 > Example tests: 
-> * [Test Flow With Three Reverse Composing Functions](tests/test_flow_with_three_reverse_composing_functions.py)
-> * [Test Flow With Function Composing Another Function With Arguments With Default Values](tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
+> * [Test Flow with Three Reverse Composing Functions](tests/test_flow_with_three_reverse_composing_functions.py)
+> * [Test Flow with Function Composing Another Function with Default Values](tests/test_flow_with_function_composing_another_function_with_arguments_with_default_values.py)
 
 ### Flow Arguments
 
@@ -121,7 +121,7 @@ greet("Hello, World!")
 ```
 
 > Example test: 
-> * [Test Flow With Non Flow Function Argument](tests/test_flow_with_non_flow_function_argument.py)
+> * [Test Flow with Non Flow Function Argument](tests/test_flow_with_non_flow_function_argument.py)
 
 However, to propagate these arguments to other functions within the flow, you must define the argument in the flow configuration as a `FlowArgument` object.  
 
@@ -157,11 +157,11 @@ greet_in_user_language__by_user_email(
 ``` 
 
 > Example tests: 
-> * [Test Flow With All Functions In Configuration](tests/test_flow_with_all_functions_in_configuration.py)
-> * [Test Flow With Argument Used In The Flow](tests/test_flow_with_argument_used_in_the_flow.py)
-> * [Test Flow With Cached Flow Function](tests/test_flow_with_cached_flow_function.py)
-> * [Test Flow With Argument Default Value Overridden By Invocation](tests/test_flow_with_argument_default_value_overridden_by_invocation.py)
-> * [Test Flow With Cached Flow Function With Argument](tests/test_flow_with_cached_flow_function_with_argument.py)
+> * [Test Flow with All Functions In Configuration](tests/test_flow_with_all_functions_in_configuration.py)
+> * [Test Flow with Argument Used In The Flow](tests/test_flow_with_argument_used_in_the_flow.py)
+> * [Test Flow with Cached Flow Function](tests/test_flow_with_cached_flow_function.py)
+> * [Test Flow with Argument Default Value Overridden By Invocation](tests/test_flow_with_argument_default_value_overridden_by_invocation.py)
+> * [Test Flow with Cached Flow Function With Argument](tests/test_flow_with_cached_flow_function_with_argument.py)
 
 ### A Quick Overview
 
