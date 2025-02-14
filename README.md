@@ -10,7 +10,6 @@ functions defined in the flow configuration.
 * __Quick to learn:__ Start by writing a normal Python function and follow the example below to expand it into a flow and flowfunctions_.
 * __Fast to code:__ You write Python the same way as you would, with added high functions reusability.
 * __Python friendly:__ Uses Python best practices and rules.
-* __Production ready:__ Used by multiple companies on live projects (If you use _flow-compose_ and would like to publish your feedback, please email vinkobuble@gmail.com).
 
 ## Installation
 
