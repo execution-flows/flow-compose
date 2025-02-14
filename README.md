@@ -160,7 +160,7 @@ greet_in_user_language__by_user_email(
 
 The `greet_in_user_language__by_user_email` flow has much more functionality, but we did not need to change the `greet_using_greeting` function to accommodate new functionality.
 
-1. `user_email` is defined as a `FlowArgument`. `FlowArgument` is a subclass of a `FlowFunction`. The one invoking the flow must pass as an argument to the flow. 
+1. `user_email` is defined as a `FlowArgument`. `FlowArgument` is a subclass of a `FlowFunction`. To invoke the flow you must pass it as a keyword argument. 
 2. `user_email` is part of the flow configuration, and any flow function can access it.
 3. `user`, `user_language`, `greeting`, and `greet` are aliases configured in the `flow` configuration.
 4. Any flow function can access any other flow function from the flow configuration by adding an argument named the same as the flow function alias and annotated with `FlowFunction`.
@@ -189,7 +189,7 @@ greet_in_user_language__by_user_id(
 )
 ```
 
-We changed the `FlowArgument` and added the `user__using_user_id` function to deliver this variation. For example, a third variation can get `user_language` from the HTTP request header. Or we can get a user object from the HTTP session. All other functions will always stay the same.
+We changed the `FlowArgument` and added the `user__using_user_id` function to deliver this variation. For example, a third variation could get `user_language` from the HTTP request header. Or we can get a user object from the HTTP session. All other functions will always stay the same.
 
 To deliver the next flow variation, we only need to duplicate a configuration and pass it in the flow decorator—you will never have to copy/paste functions you already have. You only add new functions.
 
@@ -237,13 +237,13 @@ __Note:__ Type `T` represents any kind of Python type.
 
 1.`flow_argument_alias` - is an alias name for an input flow argument that you must send as an argument of the flow invocation. 
    * The `T` type is the type of the argument.
-  * The first argument in the `FlowArgument` construction is the argument type.
+  * The first argument in the `FlowArgument` construction is the flow argument type.
   * `value` argument is optional and defines its value when it is missing in the invocation arguments.
-  * It is available to all `flow_functions` in the `flow`.
+  * It is available to all flow functions in the flow.
   * It is a `callable`. You must call it `flow_argument_alias()` to get its value.
 
 2.`flow_function_alias` - An alias name for a flow function that is available to all `flow_functions` in the `flow`.
-  * The value, marked as `concrete_flow_function_name`, has to be a `flow_function` - a function that is decorated with `@flow_function` decorator.
+  * The value, marked as `concrete_flow_function_name`, has to be a flow function - a function that is decorated with `@flow_function` decorator.
 
 #### Flow function arguments
 
@@ -252,11 +252,11 @@ __Note:__ Type `T` represents any kind of Python type.
    * It is not part of the flow configuration. 
    * Therefore, it is not available to other flow functions in the flow.
 
-2. `flow_function_alias` - An alias name for a flow function that is available to all `flow_functions` in the `flow`.
-   * The value, marked as `concrete_flow_function_name`, must be a `flow_function` - a function decorated with a `@flow_function` decorator.
+2. `flow_function_alias` - An alias name for a flow function that is available to all `flow_functions` in the flow.
+   * The value, marked as `concrete_flow_function_name`, must be a flow function - a function decorated with a `@flow_function` decorator.
 
-3. `flow_function` - a `flow_function` defined in the flow configuration made available to the code in the flow function body.
-   * When the `flow_function` has a default value, that default value is used in the flow function body. The rest of the flow functions have access to the definition from the flow configuration.
+3. `flow_function` - a flow function defined in the flow configuration made available to the code in the flow function body.
+   * When the `flow_function` has a default value, that default value is only used in the flow function body. The rest of the flow functions have access to the definition from the flow configuration.
    * The `T` type is the return type of the function.
 
 ### flow function
@@ -275,10 +275,10 @@ def flow_function_name(
 ```
 
 1. `cached` - an optional argument with default value `False`.
-    * When set to `True`, the function will be called only once during a single flow execution, and the flow context will cache its return value.
+    * When set to `True`, the function will be called only once during a single flow execution, and the flow context will cache its return value for the duration of the flow execution.
     * We set the `cached` flag to `True` when:
-      1. The function execution is expensive - like reading from the DB or requesting an external API, and the result will not change during the flow execution.
-      2. We want to make the function idempotent - like when creating or updating a DB record. We want to ensure we create only one record or update the same record only once.
+      1. The function execution is expensive - like reading from a database or sending a request to an external API, and the result will not change during the flow execution.
+      2. We want to make the function idempotent - like when creating or updating a database record. We want to ensure we create only one record or update the same record only once.
 
 2. `standard_python_argument` - a standard Python function argument of any valid Python type passed during flow function invocation.
    * Available only in the body of the flow function.
@@ -291,5 +291,5 @@ def flow_function_name(
 ## What's next?
 
 * To support this project, please give us a star on [Github](https://github.com/execution-flows/flow-compose).
-* If you want to start using _flow-compose_, let us know how we can help at vinkobuble@gmail.com.
-* If you are already using _flow-compose_, please share your feedback to vinkobuble@gmail.com.
+* If you want to start using _flow-compose_, let us know how we can help by emailing [Vinko Buble](emailto:vinkobuble@gmail.com).
+* If you are already using _flow-compose_, please share your feedback with [Vinko Buble](emailto:vinkobuble@gmail.com).
