@@ -4,7 +4,7 @@
 
 
 from inspect import Signature
-from typing import cast, Any, Union, Dict
+from typing import cast, Any, Union
 from collections.abc import Callable
 
 import makefun
@@ -22,7 +22,7 @@ def with_signature(
     qualname: str | None = None,
     co_name: str | None = None,
     module_name: str | None = None,
-    **attrs: Dict[str, Any],
+    **attrs: dict[str, Any],
 ) -> Callable[..., Callable[..., Any]]:
     return cast(
         Callable[..., Callable[..., Any]],
