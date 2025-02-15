@@ -273,7 +273,7 @@ Handling a configuration as a dictionary opens all kinds of possibilities. Remem
 ### @flow
 
 ```python
-from flow_compose import flow, FlowArgument, FlowFunction
+from flow_compose import flow, Flow, FlowArgument, FlowFunction
 
 @flow(
     flow_argument_alias=FlowArgument(T, default=argument_value),
