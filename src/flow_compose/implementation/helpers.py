@@ -2,11 +2,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
-from typing import get_origin, Type, Any
+from typing import get_origin, Any
 
 
 def is_parameter_subclass_type(
-    parameter: inspect.Parameter, class_type: Type[Any]
+    parameter: inspect.Parameter, class_type: type[Any]
 ) -> bool:
     parameter_origin = get_origin(parameter.annotation)
     return (
