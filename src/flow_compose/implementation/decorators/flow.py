@@ -70,6 +70,25 @@ def decorator(
             flow_function_configuration.name = flow_function_name
 
             if flow_function_name in flow_function_arguments:
+                if (
+                    flow_function_configuration.value_or_empty
+                    == inspect.Parameter.empty
+                ):
+                    continue
+                argument_index = -1
+                for index, parameter in enumerate(non_flow_functions_parameters):
+                    if parameter.name == flow_function_name:
+                        argument_index = index
+                        break
+                if argument_index == -1:
+                    continue
+                parameter = non_flow_functions_parameters[argument_index]
+                non_flow_functions_parameters[argument_index] = inspect.Parameter(
+                    name=parameter.name,
+                    kind=parameter.kind,
+                    annotation=parameter.annotation,
+                    default=flow_function_configuration.value,
+                )
                 continue
 
             non_flow_function_arguments.append(flow_function_configuration)
