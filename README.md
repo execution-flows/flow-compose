@@ -89,12 +89,12 @@ This design allows different flows to define distinct `greeting` functions while
 
 ```python
 @flow_function()
-def greeting_in_spanish() -> str:
+def hola_mundo() -> str:
     return "Hola, Mundo!"
 
 
 @flow(
-    greeting=greeting_in_spanish,
+    greeting=hola_mundo,
     greet=greet_using_greeting,
 )
 def hello_world_in_spanish(greet: FlowFunction[None]) -> None:
