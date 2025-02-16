@@ -5,8 +5,9 @@ import inspect
 from typing import Generic, Callable, Any
 
 from flow_compose.implementation.classes.flow_function import FlowFunction
-from flow_compose.implementation.classes.flow_argument import FlowArgument
-from flow_compose.implementation.helpers import is_parameter_subclass_type
+from flow_compose.implementation.classes.flow_function_invoker import (
+    FlowFunctionInvoker,
+)
 from flow_compose.types import ReturnType
 
 
@@ -24,11 +25,17 @@ class Flow(FlowFunction[ReturnType], Generic[ReturnType]):
     def __call__(self, *args: Any, **kwargs: Any) -> ReturnType:
         flow_context = kwargs["__flow_context"]
         for parameter in self.parameters:
-            if (
-                parameter.name not in kwargs
-                and is_parameter_subclass_type(parameter, FlowArgument)
-                and parameter.default is inspect.Parameter.empty
+            if parameter.name not in kwargs and (
+                parameter.name in flow_context
+                or parameter.default is not inspect.Parameter.empty
             ):
-                kwargs[parameter.name] = flow_context[parameter.name]
+                if parameter.name in flow_context:
+                    kwarg = flow_context[parameter.name]
+                else:
+                    kwarg = parameter.default
+                kwargs[parameter.name] = (
+                    kwarg() if isinstance(kwarg, FlowFunctionInvoker) else kwarg
+                )
+
         del kwargs["__flow_context"]
         return super().__call__(*args, **kwargs)

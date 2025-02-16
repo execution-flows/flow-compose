@@ -11,7 +11,7 @@ Greeting = NewType("Greeting", str)
 
 @flow()
 def hello_world(greeting: Greeting) -> None:
-    print(greeting)
+    assert greeting
 
 
 class TestFlowWithNewTypeArgument(unittest.TestCase):
