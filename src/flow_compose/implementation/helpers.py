@@ -8,6 +8,11 @@ from typing import get_origin, Any
 def is_parameter_subclass_type(
     parameter: inspect.Parameter, class_type: type[Any]
 ) -> bool:
+    if callable(parameter.annotation) and hasattr(
+        parameter.annotation, "__supertype__"
+    ):
+        return False
+
     parameter_origin = get_origin(parameter.annotation)
     return (
         parameter_origin is not None
