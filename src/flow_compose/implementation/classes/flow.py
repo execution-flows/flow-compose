@@ -16,7 +16,6 @@ class Flow(FlowFunction[ReturnType], Generic[ReturnType]):
         flow: Callable[..., ReturnType],
         cached: bool = False,
     ) -> None:
-        self.__name: str | None = None
         super().__init__(
             flow_function=flow,
             cached=cached,
