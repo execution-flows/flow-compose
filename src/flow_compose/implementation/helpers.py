@@ -3,6 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
 from typing import get_origin, Any
+import sys
 
 
 def is_parameter_subclass_type(
@@ -12,6 +13,12 @@ def is_parameter_subclass_type(
         parameter.annotation, "__supertype__"
     ):
         return False
+
+    if sys.version_info >= (3, 12):
+        from typing import TypeAliasType
+
+        if isinstance(parameter.annotation, TypeAliasType):
+            return False
 
     parameter_origin = get_origin(parameter.annotation)
     return (
