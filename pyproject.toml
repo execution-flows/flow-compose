@@ -14,9 +14,9 @@ python = ">=3.10"
 makefun = "^1.15.6"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "1.11.1"
-pre-commit = "3.8.0"
-ruff = "0.6.4"
+mypy = "1.15.0"
+pre-commit = "4.1.0"
+ruff = "0.9.6"
 
 [build-system]
 requires = ["poetry-core"]
