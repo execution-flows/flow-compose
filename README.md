@@ -6,7 +6,7 @@ ___Flow Compose___ enables functions to call other functions using alias names i
 2. This allows most functions to be defined as **nullary functions** — functions without any arguments. 
 3. As a result, the codebase becomes a repository of interchangeable functions, where any function can be composed with any other function. 
 
-Of course, the composition should still make sense. However, the ability is there.
+Of course, the composition should still make sense. However, the capability is there.
 
 
 ## Key Features
