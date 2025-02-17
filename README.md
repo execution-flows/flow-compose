@@ -1,6 +1,13 @@
 # ___Flow Compose___ - Configurable Function Composition.
 
-___Flow Compose___ enables functions to call other functions using alias names instead of direct references.  
+___Flow Compose___ enables functions to call other functions using alias names instead of direct references. 
+
+1. The flow configuration defines which alias maps to which function. 
+2. This allows most functions to be defined as nullary functions — functions without any arguments. 
+3. As a result, the codebase becomes a repository of interchangeable functions, where any function can be composed with any other function. 
+
+Of course, the composition must still make sense within the business domain.
+
 
 ## Key Features
 
