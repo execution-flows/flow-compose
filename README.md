@@ -8,7 +8,6 @@ ___Flow Compose___ enables functions to call other functions using alias names i
 
 Of course, the composition should still make sense. However, the capability is there.
 
-
 ## Key Features
 
 * __Easy:__ Intuitive design makes the code simple to follow.
@@ -16,6 +15,8 @@ Of course, the composition should still make sense. However, the capability is t
 * __Quick to Learn:__ Start with a standard Python function and seamlessly extend it into a flow with flow functions.
 * __Fast to Code:__ Write Python as usual while benefiting from high code reusability.
 * __Python Friendly:__ Embraces Python's best practices and conventions.
+
+Discover more about the **Execution Flows** programming paradigm and the **Flow Compose** implementation on my dev.to blog: https://dev.to/vinko_buble.
 
 ## Installation
 
