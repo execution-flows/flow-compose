@@ -370,5 +370,6 @@ def flow_function_name(
 ## What's next?
 
 * To support this project, please give us a star on [GitHub](https://github.com/execution-flows/flow-compose).
+* Check out my dev.to blog: https://dev.to/vinko_buble. 
 * If you want to start using _flow-compose_, let us know how we can help by emailing [Vinko Buble](emailto:vinkobuble@gmail.com).
 * If you are already using _flow-compose_, please share your feedback with [Vinko Buble](emailto:vinkobuble@gmail.com).
