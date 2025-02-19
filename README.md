@@ -16,7 +16,7 @@ Of course, the composition should still make sense. However, the capability is t
 * __Fast to Code:__ Write Python as usual while benefiting from high code reusability.
 * __Python Friendly:__ Embraces Python's best practices and conventions.
 
-Discover more about the **Execution Flows** programming paradigm and the **Flow Compose** implementation on my dev.to blog: https://dev.to/vinko_buble.
+Discover more about the **Execution Flows** programming paradigm and the **Flow  ** implementation on my dev.to blog: https://dev.to/vinko_buble.
 
 ## Installation
 
