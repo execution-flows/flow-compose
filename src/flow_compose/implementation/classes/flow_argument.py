@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
+from types import UnionType
 from typing import Generic, Any
 
 from flow_compose.implementation.classes.flow_function import FlowFunction
@@ -11,7 +12,7 @@ from flow_compose.types import ReturnType
 class FlowArgument(FlowFunction[ReturnType], Generic[ReturnType]):
     def __init__(
         self,
-        argument_type: type[ReturnType],
+        argument_type: type[ReturnType] | UnionType,
         default: ReturnType | Any = inspect.Parameter.empty,
     ) -> None:
         self.__default = default
@@ -52,5 +53,5 @@ class FlowArgument(FlowFunction[ReturnType], Generic[ReturnType]):
         return []
 
     @property
-    def argument_type(self) -> type[ReturnType]:
+    def argument_type(self) -> type[ReturnType] | UnionType:
         return self._argument_type
