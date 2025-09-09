@@ -8,5 +8,5 @@ from flow_compose.types import ReturnType
 
 
 class FlowFunction(base.FlowFunction[ReturnType], Generic[ReturnType]):
-    def __call__(self, *args: Any, **kwargs: Any) -> ReturnType:
-        return self._flow_function(*args, **kwargs)
+    async def __call__(self, *args: Any, **kwargs: Any) -> ReturnType:
+        return await self._flow_function(*args, **kwargs)

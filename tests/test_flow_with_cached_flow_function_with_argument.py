@@ -32,7 +32,7 @@ def hello_world_1(greet: FlowFunction[None] = greet_using_greeting_1) -> None:
     greet()
 
 
-@flow_function(None)
+@flow_function()
 def greet_using_greeting_2(greeting: FlowFunction[str]) -> None:
     greeting_once = greeting(index=11)
     greeting_twice = greeting(13)
