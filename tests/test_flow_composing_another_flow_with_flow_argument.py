@@ -40,7 +40,7 @@ def hello_world(greet: FlowFunction[None] = greet_using_greeting) -> None:
 
 
 class TestFlowComposingAnotherFlowWithFlowArgument(unittest.TestCase):
-    def test_flow_composing_another_flow_with_flow_argument(self):
+    def test_flow_composing_another_flow_with_flow_argument(self) -> None:
         hello_world()
         greeting_hello_world_mock.assert_called_once()
         hello_world_greeting_mock.assert_called_once_with("Hello, World! - 11")
