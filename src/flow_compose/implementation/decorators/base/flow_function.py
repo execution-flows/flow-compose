@@ -54,13 +54,12 @@ def get_flow_function_parameters(
 
 
 def flow_function_with_flow_context_common(
-    __flow_context: FlowContext,
+    flow_context: FlowContext,
     flow_function_parameters: FlowFunctionParameters,
     flow_function_invoker_class: type[FlowFunctionInvokerT],
     wrapped_flow_function: Callable[..., ReturnType],
     kwargs: dict[str, Any],
 ) -> None:
-    flow_context = __flow_context
     missing_flow_function_configurations: list[str] = []
     for parameter in flow_function_parameters.flow_functions_parameters:
         if (

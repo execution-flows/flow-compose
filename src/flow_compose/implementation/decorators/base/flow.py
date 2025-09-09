@@ -3,10 +3,11 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
 from dataclasses import dataclass
-from typing import Any, Callable, Awaitable, get_args
+from typing import Any, Callable, get_args
 
 from flow_compose.implementation.classes.base.flow_function_invoker import (
     FlowFunctionInvokerT,
+    FlowFunctionT,
 )
 from flow_compose.types import ReturnType
 from flow_compose.implementation.classes.base import (
@@ -25,8 +26,8 @@ class FlowParameters:
 
 
 def get_flow_parameters(
-    flow_functions_configuration: dict[str, FlowFunction[Any]],
-    wrapped_flow: Callable[..., Awaitable[ReturnType]],
+    flow_functions_configuration: dict[str, FlowFunctionT],
+    wrapped_flow: Callable[..., ReturnType],
 ) -> FlowParameters:
     all_parameters = inspect.signature(wrapped_flow).parameters.values()
     flow_functions_parameters: list[inspect.Parameter] = []
@@ -117,11 +118,11 @@ def get_flow_parameters(
 
 
 def flow_invoker_common(
-    flow_functions_configuration: dict[str, FlowFunction[Any]],
+    flow_functions_configuration: dict[str, FlowFunctionT],
     flow_parameters: FlowParameters,
-    wrapped_flow: Callable[..., Awaitable[ReturnType]],
+    wrapped_flow: Callable[..., ReturnType],
     flow_function_invoker_class: type[FlowFunctionInvokerT],
-    flow_argument_class: type[FlowArgument],
+    flow_argument_class: type[FlowArgument[Any]],
     kwargs: dict[str, Any],
 ) -> None:
     flow_context = FlowContext()

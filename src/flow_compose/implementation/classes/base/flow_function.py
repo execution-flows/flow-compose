@@ -3,7 +3,7 @@
 #  file, You can obtain one at https://mozilla.org/MPL/2.0/.
 import inspect
 from functools import cached_property
-from typing import Generic, Callable, Awaitable
+from typing import Generic, Callable, TypeVar
 
 from flow_compose.types import ReturnType
 
@@ -11,12 +11,13 @@ from flow_compose.types import ReturnType
 class FlowFunction(Generic[ReturnType]):
     def __init__(
         self,
-        flow_function: Callable[..., ReturnType | Awaitable[ReturnType]],
+        flow_function: Callable[..., ReturnType],
         cached: bool,
     ):
         self._flow_function = flow_function
         self._flow_function_signature = inspect.signature(flow_function)
         self.cached = cached
+        self.value: ReturnType
 
     @property
     def name(self) -> str:
@@ -25,3 +26,6 @@ class FlowFunction(Generic[ReturnType]):
     @cached_property
     def parameters(self) -> list[inspect.Parameter]:
         return [p for p in self._flow_function_signature.parameters.values()]
+
+
+FlowFunctionT = TypeVar("FlowFunctionT", bound=FlowFunction)  # type:ignore[type-arg]

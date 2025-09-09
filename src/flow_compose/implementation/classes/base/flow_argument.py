@@ -5,10 +5,11 @@ import inspect
 from types import UnionType
 from typing import Generic, Any
 
+from flow_compose.implementation.classes.base.flow_function import FlowFunction
 from flow_compose.types import ReturnType
 
 
-class FlowArgument(Generic[ReturnType]):
+class FlowArgument(FlowFunction[ReturnType], Generic[ReturnType]):
     def __init__(
         self,
         argument_type: type[ReturnType] | UnionType,

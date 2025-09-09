@@ -10,7 +10,7 @@ from flow_compose.types import ReturnType
 
 
 class FlowFunctionInvoker(
-    base.FlowFunctionInvoker[FlowFunction, ReturnType], Generic[ReturnType]
+    base.FlowFunctionInvoker[FlowFunction[ReturnType], ReturnType], Generic[ReturnType]
 ):
     def __call__(self, *args: Any, **kwargs: Any) -> ReturnType:
         if not self._flow_function.cached:

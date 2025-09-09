@@ -7,14 +7,14 @@ from flow_compose.types import ReturnType
 from flow_compose.implementation.classes.base.flow_function import FlowFunction
 
 
-class FlowContext(dict[str, "FlowFunctionInvoker[Any]"]):
+class FlowContext(dict[str, "FlowFunctionInvoker[FlowFunction[Any], Any]"]):
     pass
 
 
 EMPTY_FLOW_CONTEXT = FlowContext()
 
 
-FlowFunctionT = TypeVar("FlowFunctionT", bound=FlowFunction)
+FlowFunctionT = TypeVar("FlowFunctionT", bound=FlowFunction)  # type:ignore[type-arg]
 
 
 class FlowFunctionInvoker(Generic[FlowFunctionT, ReturnType]):
@@ -28,4 +28,4 @@ class FlowFunctionInvoker(Generic[FlowFunctionT, ReturnType]):
         self._flow_function_cache: dict[int, ReturnType] = {}
 
 
-FlowFunctionInvokerT = TypeVar("FlowFunctionInvokerT", bound=FlowFunctionInvoker)
+FlowFunctionInvokerT = TypeVar("FlowFunctionInvokerT", bound=FlowFunctionInvoker)  # type:ignore[type-arg]
